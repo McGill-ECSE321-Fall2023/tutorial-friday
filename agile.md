@@ -4,14 +4,13 @@ We are uncovering better ways of developing
 software by doing it and helping others do it.
 Through this work we have come to value:
 
-Processes and tools over individuals and interactions
-Comprehensive documentation over working software
-Contract negotiation over customer collaboration
-Following a plan over responding to change
+Individuals and interactions over processes and tools
+Working software over comprehensive documentation
+Customer collaboration over contract negotiation
+Responding to change over following a plan
 
 That is, while there is value in the items on
 the right, we value the items on the left more.
-
 
 Kent Beck
 Mike Beedle
@@ -30,6 +29,7 @@ Steve Mellor
 Ken Schwaber
 Jeff Sutherland
 Dave Thomas
+
 
 © 2001, the above authors
 this declaration may be freely copied in any form,
