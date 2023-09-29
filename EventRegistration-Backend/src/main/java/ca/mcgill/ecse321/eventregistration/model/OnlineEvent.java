@@ -3,6 +3,9 @@ package ca.mcgill.ecse321.eventregistration.model;
 import java.sql.Date;
 import java.sql.Time;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class OnlineEvent extends Event {
 
 	// ------------------------
@@ -15,9 +18,14 @@ public class OnlineEvent extends Event {
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
+	
+	// Hibernate needs a default constructor, but it doesn't need to be public!
+	@SuppressWarnings("unused")
+	private OnlineEvent() {
+	}
 
-	public OnlineEvent(int aId, String aName, Date aDate, Time aStartTime, Time aEndTime, String aUrl) {
-		super(aId, aName, aDate, aStartTime, aEndTime);
+	public OnlineEvent(String aName, Date aDate, Time aStartTime, Time aEndTime, String aUrl) {
+		super(aName, aDate, aStartTime, aEndTime);
 		url = aUrl;
 	}
 

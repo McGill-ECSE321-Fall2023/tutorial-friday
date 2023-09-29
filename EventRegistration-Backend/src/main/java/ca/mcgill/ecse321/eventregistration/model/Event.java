@@ -3,6 +3,15 @@ package ca.mcgill.ecse321.eventregistration.model;
 import java.sql.Date;
 import java.sql.Time;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Event {
 
 	// ------------------------
@@ -10,6 +19,8 @@ public abstract class Event {
 	// ------------------------
 
 	// Event Attributes
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
 	private Date date;
@@ -19,9 +30,13 @@ public abstract class Event {
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
+	
+	// Hibernate needs a default constructor, but it doesn't need to be public!
+	@SuppressWarnings("unused")
+	protected Event() {
+	}
 
-	public Event(int aId, String aName, Date aDate, Time aStartTime, Time aEndTime) {
-		id = aId;
+	public Event(String aName, Date aDate, Time aStartTime, Time aEndTime) {
 		name = aName;
 		date = aDate;
 		startTime = aStartTime;

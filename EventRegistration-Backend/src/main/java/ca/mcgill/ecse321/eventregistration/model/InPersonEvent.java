@@ -3,6 +3,9 @@ package ca.mcgill.ecse321.eventregistration.model;
 import java.sql.Date;
 import java.sql.Time;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class InPersonEvent extends Event {
 
 	// ------------------------
@@ -15,9 +18,14 @@ public class InPersonEvent extends Event {
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
+	
+	// Hibernate needs a default constructor, but it doesn't need to be public!
+	@SuppressWarnings("unused")
+	private InPersonEvent() {
+	}
 
-	public InPersonEvent(int aId, String aName, Date aDate, Time aStartTime, Time aEndTime, String aAddress) {
-		super(aId, aName, aDate, aStartTime, aEndTime);
+	public InPersonEvent(String aName, Date aDate, Time aStartTime, Time aEndTime, String aAddress) {
+		super(aName, aDate, aStartTime, aEndTime);
 		address = aAddress;
 	}
 
