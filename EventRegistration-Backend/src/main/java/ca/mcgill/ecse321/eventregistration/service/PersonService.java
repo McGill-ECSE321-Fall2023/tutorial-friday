@@ -18,6 +18,11 @@ public class PersonService {
 	}
 	
 	@Transactional
+	public Iterable<Person> readAllPeople() {
+		return personRepo.findAll();
+	}
+	
+	@Transactional
 	public Person readPersonById(int id) {
 		return personRepo.findPersonById(id);
 	}

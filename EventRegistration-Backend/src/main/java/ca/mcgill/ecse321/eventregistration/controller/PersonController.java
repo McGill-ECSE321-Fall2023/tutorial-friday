@@ -20,6 +20,11 @@ public class PersonController {
 		return personService.createPerson(personToCreate);
 	}
 	
+	@GetMapping("/person")
+	public Iterable<Person> readAllPeople() {
+		return personService.readAllPeople();
+	}
+	
 	@GetMapping("/person/{id}")
 	public Person readPersonById(@PathVariable int id) {
 		return personService.readPersonById(id);
