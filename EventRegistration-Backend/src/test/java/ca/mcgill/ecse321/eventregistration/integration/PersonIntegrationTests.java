@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.eventregistration.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -55,7 +56,8 @@ public class PersonIntegrationTests {
 		assertNotNull(response.getBody());
 		assertTrue(response.getBody().getId() > 0, "Response body should have an ID.");
 		assertEquals(PERSON_NAME, response.getBody().getName());
-		assertTrue(response.getBody().getIsVerified());
+		// The isVerified field in the request should be ignored
+		assertFalse(response.getBody().getIsVerified());
 		
 		// Save the ID to read later
 		this.personId = response.getBody().getId();
@@ -70,6 +72,6 @@ public class PersonIntegrationTests {
 		assertNotNull(response.getBody());
 		assertEquals(this.personId, response.getBody().getId());
 		assertEquals(PERSON_NAME, response.getBody().getName());
-		assertTrue(response.getBody().getIsVerified());
+		assertFalse(response.getBody().getIsVerified());
 	}
 }
