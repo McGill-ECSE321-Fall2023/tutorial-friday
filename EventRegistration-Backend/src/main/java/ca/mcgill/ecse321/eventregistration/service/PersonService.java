@@ -24,6 +24,10 @@ public class PersonService {
 	
 	@Transactional
 	public Person readPersonById(int id) {
-		return personRepo.findPersonById(id);
+		Person personFromDb = personRepo.findPersonById(id);
+		if (personFromDb == null) {
+			throw new IllegalArgumentException(String.format("No person with ID %d.", id));
+		}
+		return personFromDb;
 	}
 }
