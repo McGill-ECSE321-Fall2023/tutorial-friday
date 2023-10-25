@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Person {
@@ -16,7 +19,10 @@ public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@NotBlank(message = "Every person must have a non-empty name.")
 	private String name;
+	@Size(min = 8, message = "Passwords must be at least eight characters long.")
+	@NotNull(message = "Passwords must not be null.")
 	private String password;
 	private boolean isVerified;
 
