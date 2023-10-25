@@ -11,19 +11,23 @@ import jakarta.transaction.Transactional;
 public class EventService {
 	@Autowired
 	private EventRepository eventRepo;
-	
+
 	@Transactional
 	public Event createEvent(Event event) {
 		return this.eventRepo.save(event);
 	}
-	
+
 	@Transactional
 	public Iterable<Event> readAllEvents() {
 		return this.eventRepo.findAll();
 	}
-	
+
 	@Transactional
 	public Event readEventById(int id) {
-		return this.eventRepo.findEventById(id);
+		Event event = this.eventRepo.findEventById(id);
+		if (event == null) {
+			throw new IllegalArgumentException(String.format("No event with ID %d.", id));
+		}
+		return event;
 	}
 }

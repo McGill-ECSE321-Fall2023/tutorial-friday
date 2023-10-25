@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -19,6 +21,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import ca.mcgill.ecse321.eventregistration.dto.MultiPersonResponseDto;
+import ca.mcgill.ecse321.eventregistration.dto.PersonResponseDto;
 import ca.mcgill.ecse321.eventregistration.model.Person;
 import ca.mcgill.ecse321.eventregistration.repository.PersonRepository;
 
@@ -50,14 +54,14 @@ public class PersonIntegrationTests {
 		// Write a request
 		Person john = new Person(PERSON_NAME, "password123", true);
 		// Send the request
-		ResponseEntity<Person> response = client.postForEntity("/person", john, Person.class);
+		ResponseEntity<PersonResponseDto> response = client.postForEntity("/person", john, PersonResponseDto.class);
 		// Assert
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertNotNull(response.getBody());
 		assertTrue(response.getBody().getId() > 0, "Response body should have an ID.");
 		assertEquals(PERSON_NAME, response.getBody().getName());
 		// The isVerified field in the request should be ignored
-		assertFalse(response.getBody().getIsVerified());
+		assertFalse(response.getBody().isVerified());
 		
 		// Save the ID to read later
 		this.personId = response.getBody().getId();
@@ -67,11 +71,31 @@ public class PersonIntegrationTests {
 	@Order(2)
 	public void testReadPerson() {
 		String url = String.format("/person/%d", this.personId);
-		ResponseEntity<Person> response = client.getForEntity(url, Person.class);
+		ResponseEntity<PersonResponseDto> response = client.getForEntity(url, PersonResponseDto.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertNotNull(response.getBody());
 		assertEquals(this.personId, response.getBody().getId());
 		assertEquals(PERSON_NAME, response.getBody().getName());
-		assertFalse(response.getBody().getIsVerified());
+		assertFalse(response.getBody().isVerified());
+	}
+	
+	@Test
+	@Order(2)
+	public void testReadAllPeople() {
+		String url = "/person";
+		ResponseEntity<MultiPersonResponseDto> response = client.getForEntity(url, MultiPersonResponseDto.class);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		MultiPersonResponseDto responseBody = response.getBody();
+		assertNotNull(responseBody);
+		assertNotNull(responseBody.getPeople());
+		ArrayList<PersonResponseDto> people = new ArrayList<PersonResponseDto>();
+		for (PersonResponseDto prd : responseBody.getPeople()) {
+			people.add(prd);
+		}
+		assertEquals(1, people.size());
+		assertNotNull(people.get(0));
+		assertEquals(this.personId, people.get(0).getId());
+		assertEquals(PERSON_NAME, people.get(0).getName());
+		assertFalse(people.get(0).isVerified());
 	}
 }

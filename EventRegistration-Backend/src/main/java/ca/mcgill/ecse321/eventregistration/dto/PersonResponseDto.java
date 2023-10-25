@@ -7,6 +7,8 @@ public class PersonResponseDto {
 	private String name;
 	private boolean isVerified;
 	
+	public PersonResponseDto() {}
+	
 	public PersonResponseDto(Person person) {
 		this.id = person.getId();
 		this.name = person.getName();
