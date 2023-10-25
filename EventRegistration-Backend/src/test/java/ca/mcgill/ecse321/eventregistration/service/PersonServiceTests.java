@@ -11,12 +11,15 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ca.mcgill.ecse321.eventregistration.model.Person;
 import ca.mcgill.ecse321.eventregistration.repository.PersonRepository;
 
 @SpringBootTest
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class PersonServiceTests {
 
 	@Mock
