@@ -14,7 +14,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 
+import ca.mcgill.ecse321.eventregistration.exception.EventRegistrationException;
 import ca.mcgill.ecse321.eventregistration.model.Person;
 import ca.mcgill.ecse321.eventregistration.repository.PersonRepository;
 
@@ -67,9 +69,10 @@ public class PersonServiceTests {
 		// Setup
 		int invalidId = 1;
 		// Act and assert
-		IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+		EventRegistrationException ex = assertThrows(EventRegistrationException.class,
 				() -> personService.readPersonById(invalidId));
 		assertEquals(String.format("No person with ID %d.", invalidId), ex.getMessage());
+		assertEquals(HttpStatus.NOT_FOUND, ex.getStatus());
 		// assertThrows is roughly equivalent to the following:
 //		try {
 //			personService.readPersonById(invalidId);
