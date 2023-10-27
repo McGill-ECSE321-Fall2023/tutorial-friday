@@ -8,6 +8,7 @@ import ca.mcgill.ecse321.eventregistration.exception.EventRegistrationException;
 import ca.mcgill.ecse321.eventregistration.model.Person;
 import ca.mcgill.ecse321.eventregistration.repository.PersonRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @Service
 public class PersonService {
@@ -15,7 +16,7 @@ public class PersonService {
 	private PersonRepository personRepo;
 
 	@Transactional
-	public Person createPerson(Person person) {
+	public Person createPerson(@Valid Person person) {
 		return personRepo.save(person);
 	}
 
