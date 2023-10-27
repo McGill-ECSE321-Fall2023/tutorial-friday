@@ -3,6 +3,8 @@ package ca.mcgill.ecse321.eventregistration.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,10 +29,11 @@ public class PersonController {
 	 * @return The created person.
 	 */
 	@PostMapping("/person")
-	public PersonResponseDto createPerson(@RequestBody PersonRequestDto personToCreate) {
+	public ResponseEntity<PersonResponseDto> createPerson(@RequestBody PersonRequestDto personToCreate) {
 		Person personModel = personToCreate.toModel();
 		Person createdPerson = personService.createPerson(personModel);
-		return new PersonResponseDto(createdPerson);
+		PersonResponseDto responseBody = new PersonResponseDto(createdPerson);
+		return new ResponseEntity<PersonResponseDto>(responseBody, HttpStatus.CREATED);
 	}
 	
 	/**

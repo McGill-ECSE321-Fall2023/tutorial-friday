@@ -56,7 +56,7 @@ public class PersonIntegrationTests {
 		// Send the request
 		ResponseEntity<PersonResponseDto> response = client.postForEntity("/person", john, PersonResponseDto.class);
 		// Assert
-		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
 		assertNotNull(response.getBody());
 		assertTrue(response.getBody().getId() > 0, "Response body should have an ID.");
 		assertEquals(PERSON_NAME, response.getBody().getName());
