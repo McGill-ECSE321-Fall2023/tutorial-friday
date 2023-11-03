@@ -14,4 +14,12 @@ public class PersonRequestDto {
 	public Person toModel() {
 		return new Person(this.name, this.password, false);
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }
