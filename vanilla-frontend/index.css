@@ -1,0 +1,35 @@
+/* Select by ID */
+#create-person-btn {
+	color: darkgreen;
+	background-color: lightgreen;
+	border: 1px dashed darkgreen;
+}
+
+/* Select by tag name h1 OR h2 */
+h1, h2 {
+	text-decoration: 1px solid underline;
+}
+
+table {
+	border: 1px solid black;
+}
+
+th, td {
+	border: 1px solid black;
+	padding: 5px;
+}
+
+html {
+	font-family: 'Calibri';
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+/* Select by class */
+.error-msg {
+	color: red;
+}
