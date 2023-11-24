@@ -1,6 +1,11 @@
 <template>
   <div id="users-component">
     <h1>Event Registration</h1>
+    <!-- <a href="/#/hello">Hello Page</a> -->
+    <!-- <router-link to="/hello">Hello Page</router-link> -->
+    <router-link :to="{name: 'Hello'}">Hello Page</router-link>
+    <!-- <button @click="$router.push({name: 'Hello'})">Hello Page</button> -->
+    <!-- <button @click="$router.replace({name: 'Hello'})">Hello Page</button> -->
     <h2>Users</h2>
     <table>
       <tbody>
