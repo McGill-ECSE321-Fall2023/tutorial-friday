@@ -52,7 +52,15 @@ export default {
     };
   },
   async created() {
-    const response = await axiosClient.get("/person");
+    let response;
+    try {
+      response = await axiosClient.get("/person");
+    }
+    catch (e) {
+      console.error(e);
+      alert("Failed to fetch users.");
+      return;
+    }
     this.people = response.data.people;
   },
   methods: {
@@ -61,8 +69,15 @@ export default {
         name: this.newPersonName,
         password: this.newPersonPassword
       }
-      const response = await axiosClient.post("/person", requestBody);
-      console.log(response);
+      let response;
+      try {
+        response = await axiosClient.post("/person", requestBody);
+      }
+      catch (e) {
+        console.error(e);
+        alert("Failed to create person");
+        return;
+      }
       this.people.push(response.data);
       // Vue properties are reactive: updating the DOM updates the property and updating the property also updates the DOM
       this.newPersonName = "";
