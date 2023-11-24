@@ -15,7 +15,7 @@
         </tr>
         <tr v-for="p in people">
           <td>{{ p.name }}</td>
-          <td>{{ p.isVerified ? "Yes" : "No" }}</td>
+          <td>{{ p.verified ? "Yes" : "No" }}</td>
         </tr>
       </tbody>
     </table>
@@ -27,28 +27,43 @@
         We can use createPersonErrors directly, even if it's a string.
         JavaScript automatically interprets non-empty strings as true and empty strings as false.
       -->
-      <button id="create-person-btn" @click="createUser()" v-bind:disabled="createPersonErrors">Create</button>
+      <button id="create-person-btn" @click="createUser()" v-bind:disabled="!!createPersonErrors">Create</button>
     </div>
     <p class="error-msg">{{ createPersonErrors }}</p>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import config from "../../config";
+
+const axiosClient = axios.create({
+  // baseURL, not baseUrl
+  baseURL: config.dev.backendUrl
+});
+
 export default {
   name: "Users",
   data() {
     return {
-      people: [
-        { name: "Alice", isVerified: true },
-        { name: "Bob", isVerified: false },
-      ],
+      people: [],
       newPersonName: "",
       newPersonPassword: "",
     };
   },
+  async created() {
+    const response = await axiosClient.get("/person");
+    this.people = response.data.people;
+  },
   methods: {
-    createUser() {
-      this.people.push({ name: this.newPersonName, isVerified: false });
+    async createUser() {
+      const requestBody = {
+        name: this.newPersonName,
+        password: this.newPersonPassword
+      }
+      const response = await axiosClient.post("/person", requestBody);
+      console.log(response);
+      this.people.push(response.data);
       // Vue properties are reactive: updating the DOM updates the property and updating the property also updates the DOM
       this.newPersonName = "";
       this.newPersonPassword = "";
